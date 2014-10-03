@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<!-- Apple devices fullscreen -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- Apple devices fullscreen -->
+	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<!-- Bootstrap responsive -->
+	<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css">
+	<!-- jQuery UI -->
+	<link rel="stylesheet" href="/static/css/plugins/jquery-ui/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="/static/css/plugins/jquery-ui/smoothness/jquery.ui.theme.css">
+	<!-- Fullcalendar -->
+	<link rel="stylesheet" href="/static/css/plugins/fullcalendar/fullcalendar.css">
+	<link rel="stylesheet" href="/static/css/plugins/fullcalendar/fullcalendar.print.css" media="print">
+	<!-- Tagsinput -->
+	<link rel="stylesheet" href="/static/css/plugins/tagsinput/jquery.tagsinput.css">
+	<!-- Notify -->
+	<link rel="stylesheet" href="/static/css/plugins/gritter/jquery.gritter.css">
+	<!-- ON/OFF -->
+	<link rel="stylesheet" href="/static/css/plugins/onoff/onoff.css">
+	<!-- Custom scrollbars CSS -->
+	<link href="/static/css/plugins/jquery-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="/static/css/style.css">
+	<!-- Color CSS -->
+	<link rel="stylesheet" href="/static/css/themes.css">
+	<!-- Datepicker -->
+	<link rel="stylesheet" href="/static/css/plugins/datepicker/datepicker.css">
+
+
+	<!-- jQuery -->
+	<script src="/static/js/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="/static/js/plugins/jquery-ui/jquery.ui.core.min.js"></script>
+	<script src="/static/js/plugins/jquery-ui/jquery.ui.widget.min.js"></script>
+	<script src="/static/js/plugins/jquery-ui/jquery.ui.mouse.min.js"></script>
+	<script src="/static/js/plugins/jquery-ui/jquery.ui.resizable.min.js"></script>
+	<script src="/static/js/plugins/jquery-ui/jquery.ui.draggable.min.js"></script>
+	<!-- custom scrollbars plugin -->
+	<script src="/static/js/plugins/jquery-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>	
+	<script src="/static/js/plugins/jquery-scrollbar/jquery.mousewheel.min.js"></script>	
+	<script>
+	$(document).ready(function(){
+				$(".short-post").mCustomScrollbar({
+					scrollButtons:{
+						enable:false
+					},
+					theme:"dark-thick",
+					scrollInertia:100
+				});
+				$(".expanded-post").mCustomScrollbar({
+					scrollButtons:{
+						enable:false
+					},
+					theme:"dark-thick",
+					scrollInertia:100
+				});
+	});
+	</script>
+	<!-- Bootstrap -->
+	<script src="/static/js/bootstrap.min.js"></script>
+	<!-- Bootbox -->
+	<script src="/static/js/plugins/bootbox/jquery.bootbox.js"></script>
+	<!-- Notify -->
+	<script src="/static/js/plugins/gritter/jquery.gritter.min.js"></script>
+	
+	<!-- Theme framework -->
+	<script src="/static/js/eakroko.min.js"></script>
+	<!-- Theme scripts -->
+	<script src="/static/js/application.min.js"></script>
+	<!-- Datepicker -->
+	<script src="/static/js/plugins/datepicker/bootstrap-datepicker.js"></script>
+	<!-- TagsInput -->
+	<script src="/static/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+	<!-- Jquery Nano -->
+	<script src="/static/js/jquery.nano.js"></script>
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="/static/img/favicon.ico" />
+	<!-- Apple devices Homescreen icon -->
+	<link rel="apple-touch-icon-precomposed" href="/static/img/apple-touch-icon-precomposed.png" />
+
+</head>
+
+<body>
+	<div id="filter-by-date" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove-circle"></i></button>
+			<h3 id="myModalLabel"><i class="icon-calendar"></i>&nbsp;Filter By Date</h3>
+		</div>
+		<form action="index.html" method="GET" class='form-horizontal'>
+		<div class="modal-body">
+				<div class="control-group">
+					<label for="textfield" class="control-label">From</label>
+					<div class="controls">
+						<input type="text" name="from" id="textfield" class="input-medium datepick"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="textfield" class="control-label">To</label>
+					<div class="controls">
+						<input type="text" name="to" id="textfield" class="input-medium datepick"/>
+					</div>
+				</div>					
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			<button type="submit" class="btn btn-primary" >Save changes</button>
+		</div>
+		</form>
+	</div>
+		<div id="filter-by-tag" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove-circle"></i></button>
+			<h3 id="myModalLabel"><i class="icon-tags"></i>&nbsp;Filter By Date</h3>
+		</div>
+		<form action="index.html" method="GET" class='form-horizontal'>
+		<div class="modal-body">
+				<div class="control-group">
+					<label for="textfield" class="control-label">Tags</label>
+					<div class="controls">
+						<input type="text" name="tags" id="tags" class="tagsinput" value="PHP,Laravel,Java">
+					</div>
+				</div>
+									
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			<button type="submit" class="btn btn-primary" >Save changes</button>
+		</div>
+		</form>
+	</div>
+	<div id="navigation">
+		<div class="container-fluid">
+			<a href="#" id="brand">FLAT</a>
+			<a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
+			<ul class='main-nav'>
+				<li class='active'>
+					<a href="index.html">
+						<i class="icon-home"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+						<i class="icon-edit"></i>
+						<span>My Subscriptions</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li class='active'><a href="#">Add New Website</a></li>
+						<li><a href="#">Manage</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-th-large"></i>
+						<span>My Feed Bag</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+						<i class="icon-table"></i>
+						<span>Filters</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">Latest Posts</a>
+						</li>
+						<li>
+							<a href="#">Yesterday's Posts</a>
+						</li>
+						<li>
+							<a href="#">Recently Read</a>
+						</li>
+						<li>
+							<a href="#filter-by-tag" data-toggle="modal">By Tags</a>
+						</li>
+						<li>
+							<a href="#filter-by-date" data-toggle="modal">By Date</a>
+						</li>
+					</ul>
+				</li>
+				<li id="smart">
+						<div class="onoffswitch">
+						<input type="checkbox" checked="" id="myonoffswitch" class="onoffswitch-checkbox" name="onoffswitch">
+						<label for="myonoffswitch" class="onoffswitch-label">
+						<div class="onoffswitch-inner"></div>
+						<div class="onoffswitch-switch"></div>
+						</label>
+						</div> 
+					</li>
+			</ul>
+			<div class="user">
+				<ul class="icon-nav">
+					
+					<li class="dropdown sett">
+						<a href="#" class='dropdown-toggle'  data-toggle="dropdown"  rel='tooltip' title="Settings" data-placement="bottom"><i class="icon-cog"></i></a>
+						<ul class="dropdown-menu pull-right theme-settings">
+							<li>
+								<a href="#"> Training</a>
+							</li>
+							<li>
+								<a href="#">Other Settings</a>
+							</li>
+							
+						</ul>
+					</li>
+				</ul>
+				<div class="dropdown">
+					<a href="#" class='dropdown-toggle' data-toggle="dropdown">John Doe <img src="img/demo/user-avatar.jpg" alt=""></a>
+					<ul class="dropdown-menu pull-right">
+						<li>
+							<a href="#">Account settings</a>
+						</li>
+						<li>
+							<a href="more-login.html">Sign out</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid" id="content">
+		<div id="left" >
+				<form action="search-results.html" method="GET" class='search-form'>
+					<div class="search-pane">
+						<input type="text" name="search" placeholder="Search here...">
+						<button type="submit"><i class="icon-search"></i></button>
+					</div>
+				</form>
+			<div class="subnav">
+				<div class="subnav-title">
+					<a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span><b class="icon-minus"></b>&nbsp;Technology</span></a>
+				</div>
+				<ul class="subnav-menu" style="display: none;">
+					<li>
+						<a href="#"><i class="icon-ok"></i>Mashables</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-ok"></i>Lifehacker</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-remove"></i>TechCrunch</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-ok"></i>The Verge</a>
+					</li>
+				</ul>
+			</div>
+			<div class="subnav">
+				<div class="subnav-title">
+					<a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span><b class="icon-ok"></b>&nbsp;Design</span></a>
+				</div>
+				<ul class="subnav-menu" style="display: none;">
+					<li>
+						<a href="#"><i class="icon-ok"></i>Design Milk</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-ok"></i>Fubiz</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-ok"></i>A List Apart</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-ok"></i>Fresh Home</a>
+					</li>
+				</ul>
+			</div>
+			<div class="subnav">
+				<div class="subnav-title">
+					<a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span><b class="icon-remove"></b>&nbsp;Sports</span></a>
+				</div>
+				<ul class="subnav-menu" style="display: none;">
+					<li>
+						<a href="#"><i class="icon-remove"></i>ESPN.com</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-remove"></i>Dead Spin</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-remove"></i>Sports Illustrated</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="main">
+			<div class="container-fluid full-post-container">
+				<div class="row-fluid full-post-container">
+					<div class="span5 short-post">
+					{% for feed in feeds %}
+						<div class="box box-bordered">
+										<div class="box-title">
+											<h3>
+												{{feed.title}}
+											</h3>
+											
+										</div>
+										<div class="box-content">
+											<div class="short-post-img">
+												<img src="{{feed.image}}" class="short-img">
+											</div>
+											{{feed.summary}}
+											<div class="actn-btns">
+												<div class="actions">
+													<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Pint to My Feed Bag"><i class="icon-pushpin"></i></a>
+													<a class="btn btn-mini" href="{{feed.link}}" rel="tooltip" target="_blank" data-placement="bottom" title="Open in New Tab"><i class="icon-external-link"></i></a>
+													<a href="#" class="btn btn-mini popover-html" rel="popover" title="Share" data-placement="bottom" data-content="<a href='#'><i class='icon-facebook'></i></a><a href='#'><i class=' icon-twitter'></i></a><a href='#'><i class='icon-google-plus'></i></a><a href='#'><i class='icon-pinterest'></i></a>" ><i class="icon-share"></i></a>
+													<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Like"><i class="icon-heart-empty"></i></a>
+													<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Remove"><i class="icon-remove"></i></a>
+													<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Mark as Read"><i class="icon-ok"></i></a>
+												</div>
+											</div>
+										</div>
+						</div>
+						{% endfor %}
+						<div class="load-more" id="{{lastDate}}">Show more</div>
+						
+					</div>
+					<div class="span7 expanded-post">
+							<div class="box">
+										<div class="box-title"><h3>Imagine Yourself as the Audience's Equal to Speak More Confidently</h3>
+											<div class="actn-btns ex-actn-btns">
+												<div class="actions">
+													<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Pint to My Feed Bag"><i class="icon-pushpin"></i></a>
+													<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Open in New Tab"><i class="icon-external-link"></i></a>
+													<a href="#" class="btn btn-mini popover-html" rel="popover" title="Share" data-placement="bottom" data-content="<a href='#'><i class='icon-facebook'></i></a><a href='#'><i class=' icon-twitter'></i></a></br><a href='#'><i class='icon-google-plus'></i></a><a href='#'><i class='icon-pinterest'></i></a>" ><i class="icon-share"></i></a>
+													<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Like"><i class="icon-heart-empty"></i></a>
+												</div>
+											</div>
+										</div>
+										<div class="box-content">
+											<div class="post-image"><img class="expanded-post-img" src="/static/img/demo/ex-pic.jpg"/> </div>
+										Lorem ipsum dolor sit amet, no virtute vivendo repudiare ius. Choro graeco volumus eu eos, vim ullum voluptua ei. Inani graece maiestatis nec at. His iudico menandri electram an, nusquam tractatos has ea. Albucius accusata in vix, an his iudico dissentiunt. Mei movet congue in.
+
+Mea cu illud omnes scaevola, cu nostro voluptaria ius, nec errem consul et. Eu nisl case platonem per, sea no munere consectetuer. His simul aeterno consequuntur ne, paulo impetus persecuti te ius. Nihil iriure molestiae te vix, dico fastidii ex nam. Ea est vitae malorum scaevola, vix tamquam dolorum verterem ne. Ex mel sententiae ullamcorper.
+
+Eu his scaevola convenire imperdiet, an cum tincidunt definiebas, sit saepe lucilius mediocritatem te. Senserit reprimique definitiones et vix. In scripta prompta complectitur vix. Quod dico malis has an. Sale atqui usu ne, ex vidit clita vis. Nec no quodsi insolens recteque.
+
+Ex enim delectus nam, ei alia tota mea, pro an amet mentitum. Pro solet insolens iudicabit an, eros tamquam lucilius nec id. Simul nonumes referrentur vix at, nec vocent repudiare splendide at. Dolorem fuisset oporteat at quo. Dolorem copiosae argumentum eu his, an mollis vivendum perfecto duo.
+
+Pri ad ornatus facilisis molestiae. Cum te graeco omittantur. An ferri appellantur sit, sea ea doming blandit nominavi. Eam ornatus civibus fierent eu, his an atqui iuvaret, dicant ridens inciderint ea mei. Vis eripuit ocurreret elaboraret at, ei vel quem eleifend eloquentiam. Pri ludus doming feugiat an, ad ubique fabellas consequat duo, vix dicat vitae disputando eu.
+										</div>
+							</div> 			
+					</div>
+				</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	(function($){
+		  $.nano = function(template, data) {
+		    return template.replace(/\{([\w\.]*)\}/g, function (str, key) {
+		      var keys = key.split("."), value = data[keys.shift()];
+		      $.each(keys, function () { value = value[this]; });
+		      return (value === null || value === undefined) ? "" : value;
+		    });
+		  };
+		})(jQuery);
+	</script>
+	<script type="text/javascript">
+	$(".short-post").on("click",'.load-more',function(){
+		var load_str = '<div id="loader"><img src="/static/img/loader16x16.gif"/></div>'
+		var last_date = $(this).attr("id");
+		var template = '<div class="box box-bordered">\
+		<div class="box-title">\
+		<h3>\
+			{title}\
+		</h3>\
+	</div>\
+	<div class="box-content">\
+		<div class="short-post-img">\
+			<img src="{image}" class="short-img">\
+		</div>\
+		{summary}\
+		<div class="actn-btns">\
+			<div class="actions">\
+				<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Pint to My Feed Bag"><i class="icon-pushpin"></i></a>\
+				<a class="btn btn-mini" href="{link}" rel="tooltip" target="_blank" data-placement="bottom" title="Open in New Tab"><i class="icon-external-link"></i></a>\
+				<a href="#" class="btn btn-mini popover-html" rel="popover" title="Share" data-placement="bottom" data-content="<a href=\'#\'><i class=\'icon-facebook\'></i></a><a href=\'#\'><i class=\' icon-twitter\'></i></a><a href=\'#\'><i class=\'icon-google-plus\'></i></a><a href=\'#\'><i class=\'icon-pinterest\'></i></a>" ><i class="icon-share"></i></a>\
+				<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Like"><i class="icon-heart-empty"></i></a>\
+				<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Remove"><i class="icon-remove"></i></a>\
+				<a class="btn btn-mini" href="#" rel="tooltip" data-placement="bottom" title="Mark as Read"><i class="icon-ok"></i></a>\
+			</div>\
+		</div>\
+	</div>\
+</div>';
+		if(last_date){
+			var last_date_new ="";
+			$("#load-more").fadeOut('slow');
+			$(".short-post").append(load_str);
+			$(this).remove();
+			$.getJSON("/load-more-short-feeds?",{last_date: last_date}, function(data) {
+				  $.each(data, function(i, item){
+					    $(".short-post .mCSB_container").append($.nano(template, item));
+					    last_date_new = item.date;
+					  })
+				  $("#loader").remove();	  
+				  $(".short-post .mCSB_container").append('<div class="load-more" id="'+last_date_new+'">Show more</div>');
+				  $(".short-post").mCustomScrollbar("update");  
+				});
+		}
+	});
+	</script>
+	</body>
+
+	</html>
+
