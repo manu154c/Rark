@@ -1,6 +1,9 @@
 import hashlib
 
+from django.http import Http404
+
 from pymongo.mongo_client import MongoClient
+from bson.objectid import ObjectId
 
 
 class Mongo():
@@ -37,6 +40,16 @@ class Mongo():
             if(self.db.feeds.find({"feed.id": id}).count()):
                 return True
             return False
+
+    def selectFeedById(self, id):
+        '''
+        Select a single feed by __dirname
+        '''
+        try:
+            feed = self.db.feeds.find_one({"_id": ObjectId(id)})
+            return feed
+        except:
+            raise Http404
 
     def selectFeeds(self, dateOfLastItem=None, limit=10):
         '''

@@ -26,7 +26,7 @@
 	<!-- ON/OFF -->
 	<link rel="stylesheet" href="/static/css/plugins/onoff/onoff.css">
 	<!-- Custom scrollbars CSS -->
-	<link href="/static/css/plugins/jquery-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+	<link href="/static/css/plugins/			jquery-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" />
 	<!-- Theme CSS -->
 	<link rel="stylesheet" href="/static/css/style.css">
 	<!-- Color CSS -->
@@ -53,14 +53,14 @@
 						enable:false
 					},
 					theme:"dark-thick",
-					scrollInertia:100
+					scrollInertia:1000
 				});
 				$(".expanded-post").mCustomScrollbar({
 					scrollButtons:{
 						enable:false
 					},
 					theme:"dark-thick",
-					scrollInertia:100
+					scrollInertia:1000
 				});
 	});
 	</script>
@@ -139,7 +139,7 @@
 	</div>
 	<div id="navigation">
 		<div class="container-fluid">
-			<a href="#" id="brand">FLAT</a>
+			<a href="#" id="brand"></a>
 			<a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
 			<ul class='main-nav'>
 				<li class='active'>
@@ -300,7 +300,7 @@
 						<div class="box box-bordered">
 										<div class="box-title">
 											<h3>
-												{{feed.title}}
+												<a href="{{feed.link}}" target="_blank" class="feed_link" id ="{{feed.id}}">{{feed.title}}</a>
 											</h3>
 											
 										</div>
@@ -372,7 +372,7 @@ Pri ad ornatus facilisis molestiae. Cum te graeco omittantur. An ferri appellant
 		var template = '<div class="box box-bordered">\
 		<div class="box-title">\
 		<h3>\
-			{title}\
+			<a href="{link}" target="_blank" class="feed_link" id="{id}"> {title}</a>\
 		</h3>\
 	</div>\
 	<div class="box-content">\
@@ -397,7 +397,7 @@ Pri ad ornatus facilisis molestiae. Cum te graeco omittantur. An ferri appellant
 			$("#load-more").fadeOut('slow');
 			$(".short-post").append(load_str);
 			$(this).remove();
-			$.getJSON("/load-more-short-feeds?",{last_date: last_date}, function(data) {
+			$.getJSON("/reader/load-more-short-feeds?",{last_date: last_date}, function(data) {
 				  $.each(data, function(i, item){
 					    $(".short-post .mCSB_container").append($.nano(template, item));
 					    last_date_new = item.date;
@@ -407,6 +407,23 @@ Pri ad ornatus facilisis molestiae. Cum te graeco omittantur. An ferri appellant
 				  $(".short-post").mCustomScrollbar("update");  
 				});
 		}
+	});
+	$(".short-post").on("click",".feed_link",function(){
+		id = this.id;
+		$.getJSON("/reader/get-expanded-post?",{post_id : id},function(data){
+			var title = '<a href="'+data.link+'" target="_blank" id="'+data.id+'" class="expand_feed_link">'+data.title+'</a>';
+			$(".expanded-post .box .box-title h3").html(title);
+			if(data.image){
+				var imgStr = '<img src="'+data.image+'" class="expanded-post-img"/>';
+				$(".expanded-post .box .box-content").html(imgStr);
+			}
+			else
+				$(".expanded-post .box .box-content").html('');
+			$(".expanded-post .box .box-content").append(data.post);
+			$(".expanded-post").mCustomScrollbar("update");
+		});
+		  
+		return false;
 	});
 	</script>
 	</body>

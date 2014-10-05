@@ -5,20 +5,20 @@ import time
 import datetime
 from feedReader.models import SiteInfo
 from django.http import HttpResponse
-from feedReader.mongoFunctions import Mongo
 import json
 import iso8601
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def mainPage(request):
     parseFn = ParsingFuncs()
+    # need to add this as a cron job
     #parseFn.fetchFeeds()
     allFeeds = parseFn.allFeeds()
     feedsToDisplay = []
     for i in allFeeds:
         temp = {}
-        temp['id'] = i['feed']['id']
+        temp['id'] = i['_id']
         temp['title'] = i['feed']['title']
         temp['siteTitle'] = parseFn.getSiteTitle(i['siteId'])
         temp['summary'] = parseFn.getSummary(i['feed']['summary'])
@@ -41,7 +41,7 @@ def ajaxLoadFeeds(request):
     allFeeds = parseFn.allFeeds(lastDate=dateOfLastItem)
     for i in allFeeds:
         temp = {}
-        temp['id'] = i['feed']['id']
+        temp['id'] = str(i['_id'])
         temp['title'] = i['feed']['title']
         temp['siteTitle'] = parseFn.getSiteTitle(i['siteId'])
         temp['summary'] = parseFn.getSummary(i['feed']['summary'])
@@ -53,6 +53,34 @@ def ajaxLoadFeeds(request):
     return HttpResponse(feedsJSON, content_type="application/json")
 
 
+def getExpandedPost(request):
+    parseFn = ParsingFuncs()
+    id = request.GET['post_id']
+    feed = parseFn.selectFeedById(id)
+    temp = {}
+    temp['id'] = str(feed['_id'])
+    temp['title'] = feed['feed']['title']
+    temp['link'] = feed['feed']['link']
+    temp['siteTitle'] = parseFn.getSiteTitle(feed['siteId'])
+    temp['post'] = parseFn.getFullPost(feed['feed']['summary_detail']['value'])
+    temp['image'] = feed['feed']['image_link']
+    temp['date'] = feed['feed']['published_parsed'].isoformat()
+    feedJson = json.dumps(temp)
+    return HttpResponse(feedJson, content_type="application/json")
+
+
+def tryFullPost(request):
+    '''
+    try to load the full post inside the application itself
+    (not used now- can be used- its working)
+    '''
+    parseFn = ParsingFuncs()
+    link = request.POST['link']
+    summary = request.POST['summary']
+    post = parseFn.getFullPostURLOpen(link, summary)
+    return HttpResponse(post)
+
+
 def testDataToDB(request):
     '''
     function defined to add sample data to db. Need to be deleted.
@@ -62,7 +90,7 @@ def testDataToDB(request):
     si = SiteInfo()
     si.title = "LifeHacker"
     si.baseUrl = "http://lifehacker.com"
-    si.feedUrl = " http://lifehacker.com/rss"
+    si.feedUrl = "http://lifehacker.com/rss"
     si.lastModified = dt
     si.save()
 

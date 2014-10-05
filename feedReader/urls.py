@@ -1,12 +1,9 @@
 from django.conf.urls import patterns, url
 
-from feedReader.views import mainPage, testDataToDB, ajaxLoadFeeds
+from feedReader.views import testDataToDB, ajaxLoadFeeds, getExpandedPost
 
 urlpatterns = patterns('',
-                       url(r'^$', mainPage),
                        url(r'^load-more-short-feeds', ajaxLoadFeeds),
-                       url(r'^login/', loginview),
-                       url(r'^auth/', auth_and_login),
-                       url(r'^signup/',sign_up_in),
+                       url(r'^get-expanded-post', getExpandedPost),
                        url(r'^test_data/', testDataToDB),
                        )

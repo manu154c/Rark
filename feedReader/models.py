@@ -2,6 +2,10 @@ from django.db import models
 
 
 class SiteInfo(models.Model):
+
+    def __str__(self):
+        return self.title
+
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255, null=True)
     baseUrl = models.CharField(max_length=255, null=True)
@@ -14,5 +18,9 @@ class SiteInfo(models.Model):
 
 
 class tags(models.Model):
+
+    def __str__(self):
+        return self.tag
+
     tag = models.CharField(max_length=255)
     siteId = models.ForeignKey(SiteInfo)

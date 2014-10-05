@@ -81,6 +81,9 @@ class ParsingFuncs:
         md5 = hashlib.md5(str(feed).encode('utf-8'))
         return md5.hexdigest()
 
+    def selectFeedById(self, id):
+        return self.mongo.selectFeedById(id)
+
     def getSiteTitle(self, siteId):
         siteObject = SiteInfo.objects.filter(id=siteId)
         for site in siteObject:
@@ -90,6 +93,10 @@ class ParsingFuncs:
         summary1000wds = strip_tags(summary)
         summary1000wds = summary1000wds[:300] + "..."
         return summary1000wds
+
+    def getFullPost(self, summaryDetail):
+        post = strip_tags(summaryDetail)
+        return post
 
     def createLastModifiedStr(self, last_modified=None, etag=None):
         modiStr = None
@@ -104,7 +111,7 @@ class ParsingFuncs:
             last_modified = datetime.fromtimestamp(mktime(feed.updated_parsed))  # if updated date is present
         except:
             try:
-                last_modified = datetime.fromtimestamp(mktime(feed.date_parsed))  # if date field id present
+                last_modified = datetime.fromtimestamp(mktime(feed.date_parsed))  # if date field is present
             except:
                 try:
                     # if published_parsed is present

@@ -10,7 +10,7 @@ def loginview(request):
     return render_to_response('login.html', c)
 
 
-def auth_and_login(request, onsuccess='/', onfail='/login/'):
+def auth_and_login(request, onsuccess='/', onfail='/accounts/login/'):
     user = authenticate(username=request.POST['email'], password=request.POST['password'])
     if user is not None:
         login(request, user)
@@ -39,4 +39,4 @@ def sign_up_in(request):
         user = create_user(username=post['email'], email=post['email'], password=post['password'])
         return auth_and_login(request)
     else:
-        return redirect("/login/")
+        return redirect("/accounts/login/")
