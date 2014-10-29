@@ -29,6 +29,7 @@ def mainPage(request):
     return render_to_response('main.html', {'feeds': feedsToDisplay, 'lastDate': dateOfLastItem})
 
 
+@login_required(login_url='/accounts/login/')
 def ajaxLoadFeeds(request):
     parseFn = ParsingFuncs()
     try:
@@ -53,6 +54,7 @@ def ajaxLoadFeeds(request):
     return HttpResponse(feedsJSON, content_type="application/json")
 
 
+@login_required(login_url='/accounts/login/')
 def getExpandedPost(request):
     parseFn = ParsingFuncs()
     id = request.GET['post_id']
@@ -69,6 +71,7 @@ def getExpandedPost(request):
     return HttpResponse(feedJson, content_type="application/json")
 
 
+@login_required(login_url='/accounts/login/')
 def tryFullPost(request):
     '''
     try to load the full post inside the application itself
@@ -101,4 +104,17 @@ def testDataToDB(request):
     sj.lastModified = dt
     sj.save()
 
+    sj = SiteInfo()
+    sj.baseUrl = "http://www.wired.com/"
+    sj.feedUrl = "http://www.wired.com/feed/"
+    sj.title = "Wired"
+    sj.lastModified = dt
+    sj.save()
+
+    sj = SiteInfo()
+    sj.baseUrl = "http://www.simplyrecipes.com/"
+    sj.feedUrl = "http://feeds.feedburner.com/elise/simplyrecipes"
+    sj.title = "Simplyrecipes"
+    sj.lastModified = dt
+    sj.save()
     return HttpResponse("True")

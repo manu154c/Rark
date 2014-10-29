@@ -133,7 +133,8 @@ class ParsingFuncs:
         if page is not None:
             soup = BeautifulSoup(page)
             summary = summary[:25]
-            # modify this like check match for entire summary. if not found find a substring of length 50 and check again
+            # modify this like check match for entire summary.
+            #if not found find a substring of length 50 and check again
             # if again not found then reduce the length and try again
             element = soup.find(text=re.compile(summary))
             post = element.findParent('div')
@@ -145,9 +146,12 @@ class ParsingFuncs:
         img_links = soup.findAll('img')
         if len(img_links) > 0:
             for link in img_links:
-                if link['height'] == '1' or link['width'] == '1':
-                    continue
-                else:
+                try:
+                    if link['height'] == '1' or link['width'] == '1':
+                        continue
+                    else:
+                        return (link['src'])
+                except:
                     return (link['src'])
         return None
 

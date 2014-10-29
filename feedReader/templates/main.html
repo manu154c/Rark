@@ -300,7 +300,7 @@
 						<div class="box box-bordered">
 										<div class="box-title">
 											<h3>
-												<a href="{{feed.link}}" target="_blank" class="feed_link" id ="{{feed.id}}">{{feed.title}}</a>
+												<a href="/tracker/redirect?url={{feed.link}}&p_id={{feed.id}}" target="_blank" class="feed_link" id ="{{feed.id}}">{{feed.title}}</a>
 											</h3>
 											
 										</div>
@@ -410,8 +410,9 @@ Pri ad ornatus facilisis molestiae. Cum te graeco omittantur. An ferri appellant
 	});
 	$(".short-post").on("click",".feed_link",function(){
 		id = this.id;
+		href="/tracker/redirect?url={{feed.link}}&p_id={{feed.id}}"
 		$.getJSON("/reader/get-expanded-post?",{post_id : id},function(data){
-			var title = '<a href="'+data.link+'" target="_blank" id="'+data.id+'" class="expand_feed_link">'+data.title+'</a>';
+			var title = '<a href="/tracker/redirect?url='+data.link+'&p_id='+data.id+'" target="_blank" id="'+data.id+'" class="expand_feed_link">'+data.title+'</a>';
 			$(".expanded-post .box .box-title h3").html(title);
 			if(data.image){
 				var imgStr = '<img src="'+data.image+'" class="expanded-post-img"/>';
@@ -422,7 +423,9 @@ Pri ad ornatus facilisis molestiae. Cum te graeco omittantur. An ferri appellant
 			$(".expanded-post .box .box-content").append(data.post);
 			$(".expanded-post").mCustomScrollbar("update");
 		});
-		  
+		$.ajax({
+			url : "/tracker/track-opened-posts?post_id="+id
+		});  
 		return false;
 	});
 	</script>

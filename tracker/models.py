@@ -10,3 +10,6 @@ class Tracker(models.Model):
     postId = models.CharField(max_length=24, null=False)
     openInNewTab = models.BooleanField(default=False)
     visitedExternalLinks = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('userId', 'postId')

@@ -1,0 +1,116 @@
+{
+    "music" : [
+            {
+                "word"      : "musical",
+                "value"     : 0.99,
+                "samples"   : -1
+            }, 
+            {
+                "word"      : "music",
+                "value"     : 0.99,
+                "samples"   : -1
+            },
+            {
+                "word"      : "melody",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "harmony",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "rhythm",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "tempo",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "art",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "western",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "composer",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "musicians",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "classical",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "jass",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "performer",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "electronica",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "vocalist",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "rap",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "indie",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "singer" ,
+                "value"     : 0.99 ,
+                "samples"   : -1
+            },
+            {
+                "word"      : "writer",
+                "value"     : 0.99 ,
+                "samples"   : -1
+            }
+
+    ],
+    //"fashion" : [],
+    //"automobile" : [],
+    //"real-estate" : [],
+    //"travel" : [],
+    ***"design" : [],
+    //"food" : [],
+    //"movie" : [],
+    "photography" : [],
+    //"technology" :[],
+    //"health" : [],
+    "law" : [],
+    //"history" : [],
+    "lifestyle" : [],
+    //"bussiness" : [],
+    //"science" : [],
+    //"sports" : [],
+}

@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'feedReader','accounts'
+    'feedReader', 'accounts',
+    'tracker','predictor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,10 +60,20 @@ WSGI_APPLICATION = 'rakr.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'rakr',                      
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': ''
     }
 }
 
@@ -70,7 +81,6 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Calcutta'
@@ -87,3 +97,64 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+
+    # How to format the output
+    'formatters': {
+        'standard': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+    },
+
+    # Log handlers (where to go)
+    'handlers': {
+        'null': {
+            'level':'DEBUG',
+            'class':'django.utils.log.NullHandler',
+        },
+        'console':{
+            'level':'INFO',
+            'class':'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        
+    },
+
+    # Loggers (where does the log come from)
+    'loggers': {
+        'repackager': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django': {
+            'handlers':['console'],
+            'propagate': True,
+            'level':'WARN',
+        },
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'WARN',
+            'propagate': False,
+        },
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+    
+       
+    }
+}
