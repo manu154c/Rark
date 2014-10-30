@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from feedReader.mongoFunctions import Mongo
 import logging
 
 
@@ -10,18 +11,26 @@ logger = logging.getLogger(__name__)
 
 @login_required(login_url='/accounts/login/')
 def trackOpenedPosts(request):
+    mongo = Mongo()
     try:
         postId = request.GET['post_id']
         user = request.user
+        post = mongo.selectFeedById(postId)
+        userObj = mongo.selectUser(user.id)
+        postVals = post['depValues']
+        userVals = userObj['depValues']
+        for entry in userVals:
+            userVals[entry] = 0.16*postVals[entry]+0.84*userVals[entry]
         record = Tracker(userId=user, postId=postId)
         record.save()
+        mongo.updateUserValues(user.id, userVals)
         return HttpResponse("True")
     except:
         return HttpResponse("False")
 
 
 def trackNewTab(request):
-    # to do check the record alreadr exists or not if yes  SiteInfo.objects.filter(id=siteId)
+    
     postId = request.GET['p_id']
     url = request.GET['url']
     user = request.user

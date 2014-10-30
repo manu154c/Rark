@@ -74,17 +74,17 @@ class Mongo():
         except:
             raise Http404
 
-    def selectFeeds(self, dateOfLastItem=None, limit=10):
+    def selectFeeds(self, user_id, dateOfLastItem=None, limit=20):
         '''
         select feeds sorted in reverse chronological order.
         select 'limit' items published before dateOfLastItem
         '''
 
         if dateOfLastItem is None:
-            allFeeds = self.db.feeds.find().sort(
+            allFeeds = self.db.feeds.find({"processed": 1, "pref."+str(user_id):{"$exists":1}}).sort(
                 [("feed.published_parsed", -1)]).limit(limit)
         else:
-            allFeeds = self.db.feeds.find({"feed.published_parsed": {"$lt": dateOfLastItem}}).sort(
+            allFeeds = self.db.feeds.find({"processed": 1, "pref."+str(user_id):{"$exists":1}, "feed.published_parsed": {"$lt": dateOfLastItem}}).sort(
                 [("feed.published_parsed", -1)]).limit(limit)
         return allFeeds
 
@@ -103,6 +103,15 @@ class Mongo():
         allFeeds = self.db.feeds.find({"processed": 0})
         return allFeeds
 
+    def selectProcessedFeeds(self, user_id):
+        '''
+        select all feeds which are already classified. ie. processed=1
+        '''
+
+        allFeeds = self.db.feeds.find({"processed": 1, "pref.user_id": {'$ne': user_id}})
+        return allFeeds
+
+
     def updateDepValues(self, id, depValues):
         if(self.isFeedExists(id=id)):
             # logger.info(id)
@@ -117,16 +126,32 @@ class Mongo():
         depValues = {
             "automobile": 0.5,
             "bussiness": 0.5,
-            "fashion": 0.5,
-            "food": 0.5,
+            "fashion": 0.0,
+            "food": 0.0,
             "health": 0.5,
             "history": 0.5,
             "movie": 0.5,
             "music": 0.5,
-            "real-estate": 0.5,
+            "real-estate": 0.0,
             "science": 0.5,
-            "sports": 0.5,
+            "sports": 0.0,
             "technology": 0.5,
             "travel": 0.5
         }
         self.db.user.insert({"user_id": 1, "depValues": depValues})
+
+    def selectUser(self, user_id):
+        user = self.db.user.find_one({"user_id" : user_id})
+        return user
+
+    def updateUserPref(self, id, pref):
+        '''
+        sets user's preference in feed collection
+        '''
+        self.db.feeds.update({"_id": id},{"$set":{"pref": pref}})
+
+    def updateUserValues(self, id, depVals):
+        '''
+        Sets user's pref in user collection
+        '''
+        self.db.user.update({"user_id": id},{"$set":{"depValues":depVals}})

@@ -69,10 +69,10 @@ class ParsingFuncs:
                                                     link=entry['link'])
                 self.mongo.insertFeeds(entry, site.id)
 
-    def allFeeds(self, lastDate=None):
+    def allFeeds(self,user_id, lastDate=None):
         if lastDate is not None:
-            return self.mongo.selectFeeds(dateOfLastItem=lastDate)
-        return self.mongo.selectFeeds()
+            return self.mongo.selectFeeds(user_id=user_id,dateOfLastItem=lastDate)
+        return self.mongo.selectFeeds(user_id=user_id)
 
     def md5Feeds(self, feed):
         '''

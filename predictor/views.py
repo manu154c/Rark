@@ -7,5 +7,9 @@ def preparePosts(request):
     predFuncs = PredictorFuncs()
     predFuncs.processAllExistingFeeds()
     return HttpResponse("True")
-    
-    
+
+def calculatePref(request):
+	user_id = request.user.id
+	predFuncs = PredictorFuncs()
+	predFuncs.calculateUserPostDist(user_id)
+	return HttpResponse("True")

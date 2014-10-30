@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from feedReader.ParsingFunctions import ParsingFuncs
+from operator import itemgetter
 import time
 import datetime
 from feedReader.models import SiteInfo
@@ -14,7 +15,9 @@ def mainPage(request):
     parseFn = ParsingFuncs()
     # need to add this as a cron job
     #parseFn.fetchFeeds()
-    allFeeds = parseFn.allFeeds()
+    user_id = request.user.id
+    allFeeds = parseFn.allFeeds(user_id=user_id)
+    
     feedsToDisplay = []
     for i in allFeeds:
         temp = {}
@@ -24,9 +27,11 @@ def mainPage(request):
         temp['summary'] = parseFn.getSummary(i['feed']['summary'])
         temp['link'] = i['feed']['link']
         temp['image'] = i['feed']['image_link']
+        temp['pref'] = i['pref'][str(user_id)]
         feedsToDisplay.append(temp)
+    sortedfeedsToDisplay = sorted(feedsToDisplay, key=itemgetter('pref')) 
     dateOfLastItem = i['feed']['published_parsed'].isoformat()
-    return render_to_response('main.html', {'feeds': feedsToDisplay, 'lastDate': dateOfLastItem})
+    return render_to_response('main.html', {'feeds': sortedfeedsToDisplay, 'lastDate': dateOfLastItem})
 
 
 @login_required(login_url='/accounts/login/')

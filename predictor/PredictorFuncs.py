@@ -3,7 +3,7 @@ from feedReader.mongoFunctions import Mongo
 from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
-from math import ceil
+from math import ceil, sqrt
 import logging
 
 # Get an instance of a logger
@@ -180,3 +180,22 @@ class PredictorFuncs:
         self.addToDepList(
             wordToAddInDepList, depValues, sentList)
         return depValues
+
+    def euclideanDist(self, userVals , postVals):
+        distSqare = 0
+        for entry in userVals:
+            distSqare += (userVals[entry]-postVals[entry])**2
+        dist = sqrt(distSqare)
+        normalizedDist = dist / sqrt(len(userVals))
+        return normalizedDist
+
+    def calculateUserPostDist(self, user_id):
+        user = self.mongo.selectUser(user_id)
+        user_dep = user.get('depValues')
+        processedFeeds = self.mongo.selectProcessedFeeds(user_id)
+        for feed in processedFeeds:
+            feed_dep = feed.get('depValues')
+            prefValue = self.euclideanDist(user_dep, feed_dep)
+            pref = {"user_id" : user_id , "value" : prefValue}
+            feed['pref'][str(user_id)] = prefValue
+            self.mongo.updateUserPref(feed['_id'], feed['pref'])
