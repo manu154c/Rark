@@ -1,4 +1,4 @@
-from django.core.context_processors import csrf
+from django.views.decorators import csrf
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User

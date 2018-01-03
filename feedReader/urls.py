@@ -1,9 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from feedReader.views import testDataToDB, ajaxLoadFeeds, getExpandedPost
 
-urlpatterns = patterns('',
+urlpatterns = [
                        url(r'^load-more-short-feeds', ajaxLoadFeeds),
                        url(r'^get-expanded-post', getExpandedPost),
                        url(r'^test_data/', testDataToDB),
-                       )
+                       ]
